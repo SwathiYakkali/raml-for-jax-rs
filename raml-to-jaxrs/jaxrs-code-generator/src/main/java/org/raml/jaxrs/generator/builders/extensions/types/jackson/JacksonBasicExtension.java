@@ -86,14 +86,14 @@ public class JacksonBasicExtension extends TypeExtensionHelper {
         .addCode("return additionalProperties;\n").addAnnotation(JsonAnyGetter.class).build());
 
     typeSpec.addMethod(MethodSpec
-        .methodBuilder("setAdditionalProperties")
+        .methodBuilder("setAdditionalProperty")
         .returns(TypeName.VOID)
-        .addParameter(
-                      ParameterSpec.builder(ADDITIONAL_PROPERTIES_TYPE, "additionalProperties").build())
+        .addParameter(String.class, "name")
+        .addParameter(Object.class, "value")
         .addAnnotation(JsonAnySetter.class)
         .addModifiers(Modifier.PUBLIC)
         .addCode(
-                 CodeBlock.builder().add("this.additionalProperties = additionalProperties;\n").build())
+                 CodeBlock.builder().add("this.additionalProperties.put(name, value);\n").build())
         .build());
 
   }
